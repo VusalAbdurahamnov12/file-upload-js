@@ -1,44 +1,33 @@
-let inpFile = document.querySelector('[name="asgar"]');
-let div = document.querySelector('.area');
-div.addEventListener("click",function() {
-    this.children[1].click();
+let x = document.querySelector("input");
+
+let ctn = document.querySelector(".icn");
+
+ctn.addEventListener("click", function () {
+    x.click();
 })
-div.addEventListener("dragover",function(ev) {
-    ev.preventDefault
-})
-div.addEventListener("drop",function() {
-    this.children[1].click();
-})
-inpFile.addEventListener("change",function () {
-    // console.log(this.files);
-    [...this.files].forEach(file=>{
-        let reader = new FileReader();
-        let tr = document.createElement("tr"),
-        tdImg = document.createElement("td"),
-        tdName = document.createElement("td"),
-        tdSize = document.createElement("td"),
-        tdType = document.createElement("td")
-        if((file.size/1024).toFixed(2) <5000){
-            reader.onload = function () {
-                tdImg.innerHTML = "<img width='100px' src='"+ this.result+"'/>";
-                tdName.innerText = file.name;
-                tdType.innerText = file.type;
-                tdSize.innerText =  (file.size/1024).toFixed(2) + "kb";
-            } 
-            reader.readAsDataURL(file);
-            tr.append(tdImg,tdName,tdType,tdSize)
-            table.appendChild(tr);
-            var x = document.createElement("BUTTON");
-            var t = document.createTextNode("Remove");
-            x.appendChild(t);
-            table.appendChild(x);
-            x.addEventListener("click", function() {
-               this.parentElement.remove();
-              });
-        }
-        else{
-            alert("Maxiumu size 5mb Allowed")
+
+let imgs = document.querySelector(".img");
+
+x.addEventListener("change", function () {
+    [...this.files].forEach(x => {
+        let filere = new FileReader();
+        if((x.size/1024).toFixed(2) <5000)
+        {
+            let div = document.createElement("div");
+            imgs.appendChild(div);
+            filere.onload = function () {
+                div.innerHTML = "<img src='" + this.result + "'> <span>X</span>";
+                let y = document.querySelectorAll("span")
+                y.forEach(e => {
+                    e.addEventListener("click", function () {
+                        this.parentElement.remove();
+                    })
+                })
+            }
+            filere.readAsDataURL(x);
+
+        }else{
+            alert('5mb kecdunuz')
         }
     })
 })
-
